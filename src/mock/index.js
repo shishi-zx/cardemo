@@ -84,7 +84,7 @@ Mock.mock(BASE_URL+'/admin/addwork', 'post', (params) => {
         sex,
         age,
         position,
-        salary} = req[1]
+        salary} = req
     return Mock.mock({
         code: 1,
         message:'添加成功',
