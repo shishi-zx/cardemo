@@ -52,6 +52,7 @@ export default {
                 admin:this.admin,
                 password:this.password
             })
+            console.log(result)
             if(result.code!=1)return alert('服务器错误请稍后重试')
             if(result.data==null)return alert('密码错误或者用户不存在')
             await this.$store.dispatch('setAdminUser',result.data)
