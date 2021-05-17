@@ -45,6 +45,7 @@ export default {
     },
     async mounted () {
         this.worker = await this.$store.state.workeruser
+        this.worker.join_time = this.worker.join_time.slice(0,10)
     },
     methods: {
       async submitPwd(){

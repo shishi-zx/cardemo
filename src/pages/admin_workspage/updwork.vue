@@ -99,7 +99,11 @@ export default {
   async mounted () {
     await this.$store.dispatch('getAllWorks')
     this.allworks = this.$store.state.works
-    this.allworks.forEach(item=>item.sex==1?item.sex='女':item.sex='男')
+    this.allworks.forEach(item=>
+    {
+      item.sex==1?item.sex='女':item.sex='男'
+      item.join_time = item.join_time.slice(0,10)
+    })
     this.length = this.allworks.length
     this.searchworks = this.allworks
     this.works = this.searchworks.slice(0,10)
