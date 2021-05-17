@@ -3,6 +3,7 @@
 */
 import {
     RECEIVE_ADMINUSER,
+    RECEIVE_WORKERUSER,
     RECEIVE_WORKS,
     RECEIVE_CARPARTS,
     RECEIVE_CARS,
@@ -12,6 +13,9 @@ import {
 export default {
     [RECEIVE_ADMINUSER] (state, {adminuser}) {
         state.adminuser = adminuser
+    },
+    [RECEIVE_WORKERUSER] (state, {workeruser}) {
+        state.workeruser = workeruser
     },
     [RECEIVE_WORKS] (state, {works}) {
         state.works = works

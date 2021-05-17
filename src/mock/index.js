@@ -157,3 +157,28 @@ Mock.mock(BASE_URL+'/admin/addpartorder', 'post', (params) => {
         data: null
     })
 })
+//13 模拟职工登录
+Mock.mock(BASE_URL+'/worker/login','post',(params) => {
+    const req = JSON.parse(params.body)
+    if(req.name=='admin'&&req.password=='admin'){
+        return {
+            code:1,
+            message:'登录成功',
+            data: {
+                id: "1",
+                name: "路飞",
+                password: 'admin',
+                sex: '0',
+                age: "21",
+                position: "搬运工",
+                salary: '20000',
+                join_time: Date.now()
+            }
+        }
+    }
+    return {
+        code:1,
+        message:'密码错误，登录失败',
+        data: null
+    }
+})

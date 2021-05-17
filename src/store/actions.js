@@ -3,6 +3,7 @@
 */
 import {
     RECEIVE_ADMINUSER,
+    RECEIVE_WORKERUSER,
     RECEIVE_WORKS,
     RECEIVE_CARPARTS,
     RECEIVE_CARS,
@@ -19,6 +20,10 @@ export default {
     //管理员登录
     async setAdminUser({commit},adminuser) {
         commit(RECEIVE_ADMINUSER,{adminuser})
+    },
+    //职工登录
+    async setWorkerUser({commit},workeruser) {
+        commit(RECEIVE_WORKERUSER,{workeruser})
     },
     //异步获取所有职工信息
     async getAllWorks({commit}) {

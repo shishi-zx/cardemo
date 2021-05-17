@@ -1,9 +1,7 @@
 <template>
-<div>
-    <div id="loginWeb" class="clearfix" ref="WebPage">
-    <form id="login_form" @submit.prevent="submitForm" method="post">
+  <form id="login_form" @submit.prevent="submitForm" method="post" @click.stop=";">
       <div class="form-group">
-        <label>账号</label>
+        <label>{{usertype}}账号</label>
         <input
           type='text'
           class="form-control"
@@ -26,87 +24,58 @@
         <button id="submit" type="submit" class="btn btn-default">登录</button>
       </div>
     </form>
-    <div id="littlecuter" ref="littlecuter" :style="styleData">
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
-import {reqAdminLogin} from '../api'
+import {reqAdminLogin,reqWorkerLogin} from '../api'
 export default {
+  props:{
+    usertype:{
+      type:String,
+      required:true
+    }
+  },
     data () {
         return {
             admin: '',
             password: '',
-            styleData:{
-              top: '100px',
-              left: '100px',
-              transform: 'rotateY(0deg) rotateZ(45deg)',
-            }
         }
     },
     methods: {
         async submitForm(){
-            const result = await reqAdminLogin({
+          let result = {}
+          if(this.usertype == "管理员"){
+            result = await reqAdminLogin({
                 admin:this.admin,
                 password:this.password
             })
-            console.log(result)
-            if(result.code!=1)return alert('服务器错误请稍后重试')
-            if(result.data==null)return alert('密码错误或者用户不存在')
+          }else{
+            //职工登录
+            result = await reqWorkerLogin({
+                name:this.admin,
+                password:this.password
+            })
+          }
+          if(result.code!=1||result.data==null)return alert(result.message)
+          if(this.usertype=="管理员"){
             await this.$store.dispatch('setAdminUser',result.data)
             this.$router.push('admin')
+          }
+          else{
+            await this.$store.dispatch('setWorkerUser',result.data)
+            this.$router.push('worker')
+          }          
         }
     },
-    mounted() {
-      let Car = this.$refs.littlecuter
-      let Page = this.$refs.WebPage
-      let Style = this.styleData
-      let x, y, direction,deg,dx,dy
-      Page.addEventListener('mousemove', (e) => {
-        //计算位置
-        x = e.clientX
-        y = e.clientY
-        //计算方向
-        dx = x - Car.offsetLeft
-        dy = y - Car.offsetTop
-        dx>0?direction = 180:direction = 0
-        dx>0?dx=dx:dx=-dx
-        deg=Math.atan(-dy/dx)
-        deg=deg*180/Math.PI
-        Style.transform = `rotateY(${direction}deg) rotateZ(${deg}deg)`
-        
-      })
-      Page.addEventListener('click', (e) => {
-        Style.top = '' + (y+5) + 'px'
-        Style.left = ''+ (x+5) + 'px'
-      })
-    }
 }
 </script>
 
 <style>
-#littlecuter{
-  position: fixed;
-  height: 35px;
-  width: 80px;
-  top: 200px;
-  left: 200px;
-  transition: all .1s,top 2s,left 2s ;
-  background-image: url('../../static/img/car.png');
-  background-size: contain;
-}
-#loginWeb {
-  height: 100vh;
-  background-image: url('../../static/img/1.jpg');
-  background-attachment: fixed;
-  background-size: cover;
-}
 #login_form {
+  color: rgb(180, 226, 72);
   width: 600px;
   padding: 20px;
-  background: rgb(231, 99, 231, 0.4);
+  background: rgb(231, 99, 231, .4);
   margin: 150px auto;
   border-radius: 30px;
   box-shadow: 0 0 100px 30px wheat;
@@ -146,7 +115,7 @@ export default {
     }
     to{
         opacity: 0.8;
-        box-shadow: 0 0 100px 90px rgb(240, 203, 135);
+        box-shadow: 0 0 90px 50px rgb(240, 203, 135);
     }
 }
 </style>

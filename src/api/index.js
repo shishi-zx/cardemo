@@ -4,6 +4,7 @@
 */
 import ajax from './ajax'
 const BASE_URL = '/api'
+//管理员登录
 export const reqAdminLogin = (data) => ajax(BASE_URL+'/admin/login',data,'POST')
 //获取所有职工对象数据
 export const reqAllWorks = () => ajax(BASE_URL+`/admin/allworks`)
@@ -29,3 +30,7 @@ export const reqConfirmOrder = (data) => ajax(BASE_URL+`/admin/confirmorder`, da
 export const reqAddCarOrder = (data) => ajax(BASE_URL+`/admin/addcarorder`, data, 'POST')
 //提交添加组件买进订单请求
 export const reqAddPartOrder = (data) => ajax(BASE_URL+`/admin/addpartorder`, data, 'POST')
+//职工登录
+export const reqWorkerLogin = (data) => ajax(BASE_URL+'/worker/login',data,'POST')
+//职工修改密码
+export const reqWorkerUpdpwd = (data) => ajax(BASE_URL+'/worker/updpwd',data,'POST')

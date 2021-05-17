@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../components/adminlogin'
+import Login from '../components/login'
 import AdminPage from '../pages/AdminPage'
+import WorkerPage from '../pages/WorkerPage'
 import Allworks from '../pages/admin_workspage/allworks'
 import Addwork from '../pages/admin_workspage/addwork'
 import Delwork from '../pages/admin_workspage/delwork'
@@ -67,6 +68,11 @@ export default new Router({
           component: AllOrder
         },
       ]
+    },
+    {
+      path:'/worker',
+      name:"职工界面",
+      component: WorkerPage,
     }
   ]
 })
