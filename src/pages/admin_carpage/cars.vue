@@ -87,7 +87,9 @@ export default {
       this.pageindex = index
       this.cars = this.searchcars.slice(this.pageindex*10,(this.pageindex+1)*10)
     },
-    showallcars(){
+    async showallcars(){
+      await this.$store.dispatch('getAllCars')
+      this.allcars = this.$store.state.cars
       this.search = ''
       this.searchcars = this.allcars
       this.length = this.searchcars.length
